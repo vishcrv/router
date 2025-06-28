@@ -10,8 +10,13 @@ async def query_model(model_config, prompt):
                 json=model_config["body_template"](prompt),
                 timeout=20.0
             )
-            return response.json()["choices"][0]["message"]["content"]
-
+            data = response.json()
+            if "choices" in data and data["choices"]:
+                return data["choices"][0]["message"]["content"]
+            elif "error" in data:
+                return f"API ERROR: {data['error']}"
+            else:
+                return f"Unexpected response: {data}"
         except Exception as e:
             return f"ERROR: {e}"
 
