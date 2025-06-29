@@ -3,7 +3,7 @@ LLM_CONFIGS = {
         "name": "deepseek-r1",
         "url": "https://openrouter.ai/api/v1/chat/completions",
         "headers": {
-            "Authorization": "Bearer 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",
+            "Authorization": "Bearer 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",
             "Content-Type": "application/json"
         },
         "body_template": lambda prompt: {
@@ -16,7 +16,7 @@ LLM_CONFIGS = {
         "name": "mistral-small",
         "url": "https://openrouter.ai/api/v1/chat/completions",
         "headers": {
-            "Authorization": "Bearer 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",
+            "Authorization": "Bearer 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",
             "Content-Type": "application/json"
         },
         "body_template": lambda prompt: {
