@@ -9,7 +9,7 @@ __pycache__/
 # Virtual environment
 venv/
 env/
-
+.venv/
 # VS Code settings
 .vscode/
 
