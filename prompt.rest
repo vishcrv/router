@@ -1,0 +1,236 @@
+### Basic Query - Auto-select best model
+POST http://127.0.0.1:8000/query
+Content-Type: application/json
+
+{
+  "prompt": "What is the capital of India?"
+}
+
+###
+
+### Mathematical/Coding Query (should select DeepSeek R1)
+POST http://127.0.0.1:8000/query
+Content-Type: application/json
+
+{
+  "prompt": "Write a Python function to calculate the factorial of a number"
+}
+
+###
+
+### Creative Writing Query (should select Llama 3.3)
+POST http://127.0.0.1:8000/query
+Content-Type: application/json
+
+{
+  "prompt": "Write a short story about a lonely robot discovering friendship"
+}
+
+###
+
+### Visual/Multimodal Query (should select Qwen 2.5)
+POST http://127.0.0.1:8000/query
+Content-Type: application/json
+
+{
+  "prompt": "Describe this image in detail and explain what you see"
+}
+
+###
+
+### Complex Reasoning Query (should select DeepSeek R1)
+POST http://127.0.0.1:8000/query
+Content-Type: application/json
+
+{
+  "prompt": "Analyze the pros and cons of renewable energy step by step and provide a comprehensive evaluation"
+}
+
+###
+
+### Quick Factual Query (should select Gemini Flash)
+POST http://127.0.0.1:8000/query
+Content-Type: application/json
+
+{
+  "prompt": "Who is the current president of the United States?"
+}
+
+###
+
+### Language Processing Query (should select Mistral Small)
+POST http://127.0.0.1:8000/query
+Content-Type: application/json
+
+{
+  "prompt": "Translate this to Spanish and explain the grammar rules: Hello, how are you feeling today?"
+}
+
+###
+
+### Compare All Models - Full evaluation
+POST http://127.0.0.1:8000/query-compare
+Content-Type: application/json
+
+{
+  "prompt": "Explain how machine learning works in simple terms"
+}
+
+###
+
+### Query Specific Model Directly
+POST http://127.0.0.1:8000/query-specific
+Content-Type: application/json
+
+{
+  "prompt": "What is artificial intelligence?",
+  "model": "deepseek-r1"
+}
+
+###
+
+### Health Check - Test all models
+GET http://127.0.0.1:8000/health
+
+###
+
+### Test Selection Logic
+POST http://127.0.0.1:8000/test-selection
+Content-Type: application/json
+
+{
+  "prompts": [
+    "Write a Python function to sort a list",
+    "Create a poem about nature",
+    "What is the capital of France?",
+    "Describe this beautiful landscape",
+    "Analyze the economic impact of AI"
+  ]
+}
+
+###
+
+### Batch Query - Multiple prompts
+POST http://127.0.0.1:8000/batch-query
+Content-Type: application/json
+
+{
+  "prompts": [
+    "Calculate 25 * 17",
+    "Write a haiku about winter",
+    "What is quantum computing?",
+    "Describe a sunset",
+    "How does photosynthesis work?"
+  ],
+  "compare_mode": false
+}
+
+###
+
+### Batch Query with Comparison
+POST http://127.0.0.1:8000/batch-query
+Content-Type: application/json
+
+{
+  "prompts": [
+    "Solve this equation: 3x + 7 = 22",
+    "Tell me a joke",
+    "What is the meaning of life?"
+  ],
+  "compare_mode": true
+}
+
+###
+
+### Complex Mathematical Query
+POST http://127.0.0.1:8000/query
+Content-Type: application/json
+
+{
+  "prompt": "Solve this system of equations step by step: 2x + 3y = 12 and x - y = 1"
+}
+
+###
+
+### Creative Writing with Dialogue
+POST http://127.0.0.1:8000/query
+Content-Type: application/json
+
+{
+  "prompt": "Write a dialogue between two characters: a time traveler and a medieval knight"
+}
+
+###
+
+### Technical Documentation Query
+POST http://127.0.0.1:8000/query
+Content-Type: application/json
+
+{
+  "prompt": "Explain how to set up a REST API using FastAPI with detailed steps and examples"
+}
+
+###
+
+### Visual Analysis Query
+POST http://127.0.0.1:8000/query
+Content-Type: application/json
+
+{
+  "prompt": "Analyze this chart showing sales data and provide insights on the trends"
+}
+
+###
+
+### Conversational Query
+POST http://127.0.0.1:8000/query
+Content-Type: application/json
+
+{
+  "prompt": "Hi there! I'm feeling a bit stressed about work. Can you give me some advice on managing workplace stress?"
+}
+
+###
+
+### Mixed Content Query
+POST http://127.0.0.1:8000/query
+Content-Type: application/json
+
+{
+  "prompt": "Write a creative story about a programmer who discovers a bug that can alter reality, and include some actual code snippets"
+}
+
+###
+
+### Default Test Selection (uses predefined test prompts)
+POST http://127.0.0.1:8000/test-selection
+Content-Type: application/json
+
+{}
+
+###
+
+### Root Endpoint - API Information
+GET http://127.0.0.1:8000/
+
+###
+
+### Long Complex Query (should prefer DeepSeek R1)
+POST http://127.0.0.1:8000/query
+Content-Type: application/json
+
+{
+  "prompt": "I need you to help me understand the complex relationship between quantum mechanics and general relativity, specifically focusing on how these two fundamental theories of physics interact at the Planck scale, and what implications this might have for our understanding of the universe, including potential applications in quantum computing and space travel."
+}
+
+###
+
+### Short Query (should prefer Gemini Flash)
+POST http://127.0.0.1:8000/query
+Content-Type: application/json
+
+{
+  "prompt": "What is AI?"
+}
+
+
