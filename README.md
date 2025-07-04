@@ -14,11 +14,13 @@ The system evaluates prompts based on their characteristics and selects the opti
 
 ## System Architecture
 
+```bash
 ├── evaluator.py # Response scoring and evaluation logic
 ├── llm_selector.py # Model selection algorithm
 ├── llms.py # Model configurations
 ├── main.py # FastAPI application and endpoints
 └── router.py # Model querying and health checks
+```
 
 ## Key Components
 
