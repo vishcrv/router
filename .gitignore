@@ -19,3 +19,6 @@ Thumbs.db
 
 # Test output
 *.log
+
+*.json
+.json
