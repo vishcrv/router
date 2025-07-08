@@ -21,4 +21,6 @@ Thumbs.db
 *.log
 
 *.json
-.json
+dataset_test.json
+dataset_train.json
+dataset_val.json
