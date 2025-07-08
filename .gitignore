@@ -20,6 +20,5 @@ Thumbs.db
 # Test output
 *.log
 
-
-filtered_prompts.json
-labeled_prompts_selector.json
+*.json
+.json
