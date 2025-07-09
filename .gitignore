@@ -1,24 +1,9 @@
-# Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
-*$py.class
-
-# Environment variables
+*.pyc
 .env
-
-# Virtual environment
-venv/
-env/
-.venv/
-# VS Code settings
-.vscode/
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Test output
+*.ipynb
 *.log
-
-*.json
-.json
+models/
+logs/
+selector_model/
+app.py
