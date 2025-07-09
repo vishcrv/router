@@ -3,7 +3,15 @@ __pycache__/
 .env
 *.ipynb
 *.log
+<<<<<<< HEAD
 models/
 logs/
 selector_model/
 app.py
+=======
+
+*.json
+dataset_test.json
+dataset_train.json
+dataset_val.json
+>>>>>>> 19d3285d8aaa006125352551106fd093d8ca8ed2
