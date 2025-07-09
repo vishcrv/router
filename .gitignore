@@ -1,26 +1,17 @@
-# Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
-*$py.class
-
-# Environment variables
+*.pyc
 .env
-
-# Virtual environment
-venv/
-env/
-.venv/
-# VS Code settings
-.vscode/
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Test output
+*.ipynb
 *.log
+<<<<<<< HEAD
+models/
+logs/
+selector_model/
+app.py
+=======
 
 *.json
 dataset_test.json
 dataset_train.json
 dataset_val.json
+>>>>>>> 19d3285d8aaa006125352551106fd093d8ca8ed2
