@@ -187,6 +187,8 @@ Want to add a new LLM to the router? Just:
 
 ### Evaluation
 
+```bash
+
 === Evaluation on dataset_val.json ===
 Confusion Matrix:
 [[182   4   6   7   0]
@@ -229,4 +231,4 @@ mistral-small       0.82      0.74      0.78        95
      accuracy                           0.92       802
     macro avg       0.86      0.76      0.80       802
  weighted avg       0.91      0.92      0.91       802
-
+```
