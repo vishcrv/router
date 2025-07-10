@@ -41,6 +41,42 @@ Unlike static rule-based routing, this system uses a fine-tuned classifier (Dist
 pip install -r requirements.txt
 ```
 
+## 🏋️‍♂️ Training the Classifier
+
+The classifier learns to route prompts to the best model by training on labeled examples. Labels are initially generated using the rule-based system.
+
+### 🔁 Step 1: Label Prompts (Rule-based Autolabeling)
+
+Use your old rule-based logic to generate model labels for raw prompts:
+
+```bash
+python label_with_selector.py
+```
+- This creates labeled_prompts_selector.json with entries like:
+```bash
+{ "text": "Write a Python function to calculate factorial", "label": "deepseek-r1" }
+```
+
+### 🧹 Step 2: Prepare Training Data
+- Convert labeled prompts into format compatible with Hugging Face's datasets library:
+```bash
+python prepare_training_data.py
+```
+- This generates dataset_train.json, dataset_val.json, and dataset_test.json.
+
+### 🧠 Step 3: Train the Classifier
+-Fine-tune a DistilBERT classifier on the prepared dataset:
+```bash
+python train_classifier.py
+```
+- The model is saved to: `selector_model/`
+- Label encoding (class ↔︎ model) is saved in:
+```bash
+label_encoder.json
+```
+
+
+
 - Run the API:
 
 ```bash
