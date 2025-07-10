@@ -158,3 +158,28 @@ curl -X POST http://localhost:8000/query-specific \
 - Add few-shot prompting support
 - Live feedback loop for continual learning
 - Model latency & cost-based routing
+
+
+
+## Why Update the RULE based selector to a model
+### 1. Generalization beyond the rules
+- Rule-based = rigid logic.
+- Classifier = pattern recognition.
+- After training, the model can generalize from prompt features (e.g. keywords, phrasing, structure) that aren’t explicitly covered in the rule logic.
+### 2. Robustness to variation
+- Rule-based selectors break if input phrasing changes.
+- e.g. "Sum of 2 and 2?" vs. "Add 2 + 2"
+- Classifier learns semantic patterns, not fixed keyword triggers.
+### 3. Foundation for improvement
+- You can fine-tune the classifier on better ground-truth labels later:
+- Human-annotated routes
+- Evaluated best-response LLMs
+- But rule-based logic can't "learn" anything.
+### 4. Faster runtime than complex rule graphs
+- Once trained, inference is a single vectorized prediction.
+- Rule-based selectors (especially with nested heuristics) can get slow and messy.
+### 5. Easier to expand
+Want to add a new LLM to the router? Just:
+- Label a few hundred prompts with the new model
+- Retrain the classifier
+- No need to redesign rules or engineer edge cases.
