@@ -188,47 +188,46 @@ Want to add a new LLM to the router? Just:
 ### Evaluation
 
 ```bash
-
 === Evaluation on dataset_val.json ===
 Confusion Matrix:
-[[182   4   6   7   0]
- [  3 429   2   7   0]
- [ 12   3  28   8   0]
- [ 11   9   4  69   0]
- [  8   0   2   3   4]]
+[[211   2   1   6   1]
+ [  0 423   4   4   0]
+ [  4   0 110   7   0]
+ [  3   7  14 182   0]
+ [  3   1   0   0  43]]
 
 Classification Report:
                precision    recall  f1-score   support
 
-  deepseek-r1       0.84      0.91      0.88       199
- gemini-flash       0.96      0.97      0.97       441
-    llama-3.3       0.67      0.55      0.60        51
-mistral-small       0.73      0.74      0.74        93
-     qwen-2.5       1.00      0.24      0.38        17
+  deepseek-r1       0.95      0.95      0.95       221
+ gemini-flash       0.98      0.98      0.98       431
+    llama-3.3       0.85      0.91      0.88       121
+mistral-small       0.91      0.88      0.90       206
+     qwen-2.5       0.98      0.91      0.95        47
 
-     accuracy                           0.89       801
-    macro avg       0.84      0.68      0.71       801
- weighted avg       0.89      0.89      0.88       801
+     accuracy                           0.94      1026
+    macro avg       0.94      0.93      0.93      1026
+ weighted avg       0.94      0.94      0.94      1026
 
 
 === Evaluation on dataset_test.json ===
 Confusion Matrix:
-[[219   0   3   3   1]
- [  5 411   1   7   0]
- [  9   2  29   5   0]
- [ 13   9   3  70   0]
- [  3   1   2   0   6]]
+[[196   2   0  11   1]
+ [  0 419   8   4   1]
+ [  1   0 106  13   1]
+ [  5   2  22 182   0]
+ [  1   0   0   2  49]]
 
 Classification Report:
                precision    recall  f1-score   support
 
-  deepseek-r1       0.88      0.97      0.92       226
- gemini-flash       0.97      0.97      0.97       424
-    llama-3.3       0.76      0.64      0.70        45
-mistral-small       0.82      0.74      0.78        95
-     qwen-2.5       0.86      0.50      0.63        12
+  deepseek-r1       0.97      0.93      0.95       210
+ gemini-flash       0.99      0.97      0.98       432
+    llama-3.3       0.78      0.88      0.82       121
+mistral-small       0.86      0.86      0.86       211
+     qwen-2.5       0.94      0.94      0.94        52
 
-     accuracy                           0.92       802
-    macro avg       0.86      0.76      0.80       802
- weighted avg       0.91      0.92      0.91       802
+     accuracy                           0.93      1026
+    macro avg       0.91      0.92      0.91      1026
+ weighted avg       0.93      0.93      0.93      1026
 ```
