@@ -39,3 +39,25 @@ def predict_model(prompt: str) -> str:
     features = extract_features(prompt)
     prediction = classifier.predict(features)[0]
     return index_to_label[prediction]
+
+
+class SelectorClassifier:
+    def __init__(self):
+        self.classifier = classifier
+        self.index_to_label = index_to_label
+
+    def extract_features(self, prompt: str):
+        return extract_features(prompt)
+
+    def select_best_model(self, prompt: str):
+        features = self.extract_features(prompt)
+        prediction = self.classifier.predict(features)[0]
+        model_name = self.index_to_label[prediction]
+
+        # Optional: add dummy confidence + reasoning for now
+        return {
+            "selected_model": model_name,
+            "confidence": 0.9,  # Dummy — you can use predict_proba if classifier supports it
+            "reasoning": f"Classifier predicted {model_name} based on extracted features.",
+            "all_scores": {}  # Fill if using predict_proba
+        }

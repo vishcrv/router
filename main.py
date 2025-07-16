@@ -10,13 +10,13 @@ if not OPENROUTER_API_KEY:
     
 from fastapi import FastAPI, Request
 from router import query_single_model, get_all_responses, get_model_health
-from llm_selector import LLMSelector
+from selector_classifier import SelectorClassifier
 from evaluator import score_response, evaluate_selection_accuracy
 import uvicorn
 
 
 app = FastAPI(title="Enhanced LLM Router API", version="2.0")
-selector = LLMSelector()
+selector = SelectorClassifier()
 
 @app.get("/")
 async def root():
