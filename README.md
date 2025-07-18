@@ -28,6 +28,9 @@ An intelligent routing system that dynamically selects the optimal LLM for any g
 - **Health Monitoring**: Real-time model availability checks
 - **Detailed Analytics**: Response quality scoring and selection confidence
 
+## The Model can be found here
+https://drive.google.com/drive/folders/1R0Aja43ioyGsxDrPbl0bQROeoMnGxy9K?usp=sharing
+
 ## 🏗 Architecture
 
 ```
