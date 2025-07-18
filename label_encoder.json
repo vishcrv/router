@@ -1,1 +1,21 @@
-{"0": "deepseek-r1", "1": "gemini-flash", "2": "llama-3.3", "3": "mistral-small", "4": "qwen-2.5"}
+{
+  "id2label": {
+    "0": "deepseek-r1",
+    "1": "gemini-flash",
+    "2": "llama-3.3",
+    "3": "mistral-small",
+    "4": "qwen-2.5"
+  },
+  "label2id": {
+    "deepseek-r1": 0,
+    "gemini-flash": 1,
+    "llama-3.3": 2,
+    "mistral-small": 3,
+    "qwen-2.5": 4
+  },
+  "num_labels": 5,
+  "class_weights": [
+    1.4943809509277344, 0.5128076672554016, 1.4204081296920776,
+    0.832366406917572, 2.103665590286255
+  ]
+}

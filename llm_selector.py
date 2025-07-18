@@ -18,137 +18,75 @@ class LLMSelector:
     def __init__(self):
         # Define rules for model selection based on prompt analysis
         self.selection_rules = [
+            # Mathematical/Coding tasks - DeepSeek R1 is best for complex reasoning
             {
-                "keywords": ["algorithm", "complexity", "recursion", "dynamic programming", "data structure", 
-                            "optimization", "computational", "asymptotic", "big o", "time complexity", 
-                            "space complexity", "leetcode", "competitive programming", "proof by induction"],
-                "patterns": [r'\b(?:solve|implement|optimize)\s+(?:algorithm|problem)\b', 
-                            r'\bO\([nlogmk\d\^\+\*\s]+\)', r'\brecursive\s+(?:function|solution)\b',
-                            r'\bdynamic\s+programming\b', r'\bgreedy\s+algorithm\b',
-                            r'\b(?:dfs|bfs|dijkstra|bellman|floyd)\b', r'\bbacktrack(?:ing)?\b'],
+                "keywords": ["calculate", "solve", "equation", "math", "mathematics", "code", "program", 
+                           "algorithm", "function", "debug", "error", "programming", "implement", "coding"],
+                "patterns": [r'\d+[\+\-\*/]\d+', r'def\s+\w+', r'class\s+\w+', r'import\s+\w+', r'```'],
                 "model": "deepseek-r1",
-                "confidence": 0.95
+                "confidence": 0.9
             },
+            
+            # Complex Reasoning/Logic tasks - DeepSeek R1 excels at step-by-step reasoning
             {
-                "keywords": ["script", "code", "program", "function", "method", "class", "module", 
-                            "programming", "coding", "software", "implementation", "python", "javascript",
-                            "java", "c++", "html", "css", "sql", "bash", "shell", "powershell",
-                            "hello world", "print", "console", "output", "return", "variable"],
-                "patterns": [r'\bwrite\s+(?:a|an|some)?\s*(?:script|code|program|function)\b',
-                            r'\bcreate\s+(?:a|an|some)?\s*(?:script|code|program|function)\b',
-                            r'\bimplement\s+(?:a|an|some)?\s*(?:script|code|program|function)\b',
-                            r'\bhello\s+world\b', r'\bprint\s*\(', r'\bconsole\.log\b',
-                            r'\breturn\s+["\'].*["\']', r'\bdef\s+\w+\b', r'\bfunction\s+\w+\b'],
+                "keywords": ["analyze", "reasoning", "logic", "step by step", "explain why", "complex",
+                           "compare", "evaluate", "assess", "conclude", "infer", "deduce", "prove"],
+                "patterns": [r'why\s+(?:does|is|do)', r'how\s+(?:does|do|can)', r'what\s+if', r'step\s+by\s+step'],
                 "model": "deepseek-r1",
-                "confidence": 0.92
-            },
-            {
-                "keywords": ["mathematical proof", "theorem", "lemma", "corollary", "axiom", "derive", 
-                            "mathematical induction", "contradiction", "contrapositive", "formal logic",
-                            "propositional logic", "predicate logic", "set theory", "topology"],
-                "patterns": [r'\bprove\s+that\b', r'\bshow\s+that\b', r'\bdemonstrate\s+that\b',
-                            r'\bQ\.E\.D\b', r'\btherefore\b.*\bthus\b', r'\bassume\s+(?:for\s+)?contradiction\b',
-                            r'\bby\s+(?:mathematical\s+)?induction\b', r'\biff\b|\bif\s+and\s+only\s+if\b'],
-                "model": "deepseek-r1",
-                "confidence": 0.94
-            },
-            {
-                "keywords": ["debug", "error", "exception", "traceback", "stack trace", "segmentation fault",
-                            "memory leak", "null pointer", "undefined behavior", "compilation error",
-                            "runtime error", "syntax error", "logical error"],
-                "patterns": [r'(?:error|exception|fault).*(?:line|at|in)\s+\d+', 
-                            r'(?:traceback|stack\s+trace)', r'\bsegfault\b',
-                            r'(?:compile|compilation)\s+(?:error|failed)', r'\bnull\s+pointer\b',
-                            r'(?:memory|buffer)\s+(?:leak|overflow)', r'\bundefined\s+(?:reference|behavior)\b'],
-                "model": "deepseek-r1",
-                "confidence": 0.93
-            },
-            {
-                "keywords": ["logical reasoning", "deduction", "inference", "syllogism", "premise", 
-                            "conclusion", "logical fallacy", "critical thinking", "cause and effect",
-                            "correlation", "causation", "hypothesis", "scientific method"],
-                "patterns": [r'\bif\s+.*\bthen\s+.*\btherefore\b', r'\bgiven\s+that\b.*\bwe\s+can\s+(?:conclude|infer)\b',
-                            r'\bpremise\s+\d+', r'\bsyllogism\b', r'\blogical\s+fallacy\b',
-                            r'\bcause\s+and\s+effect\b', r'\bcorrelation\s+(?:does\s+not\s+imply|vs)\s+causation\b'],
-                "model": "deepseek-r1",
-                "confidence": 0.91
-            },
-            {
-                "keywords": ["creative writing", "fiction", "narrative", "character development", "plot", 
-                            "dialogue", "screenplay", "novel", "short story", "poetry", "prose",
-                            "literary device", "metaphor", "allegory", "symbolism", "world building"],
-                "patterns": [r'\bwrite\s+(?:a|an)\s+(?:story|novel|screenplay|poem|book|article|essay)\b',
-                            r'\bonce\s+upon\s+a\s+time\b', r'\bcharacter\s+development\b',
-                            r'\bplot\s+(?:twist|device|structure)\b', r'\bworld\s+building\b',
-                            r'\bliterary\s+device\b', r'\bfirst\s+person\s+narrative\b'],
-                "model": "llama-3.3",
-                "confidence": 0.92
-            },
-            {
-                "keywords": ["language translation", "localization", "linguistics", "grammar", "syntax", 
-                            "morphology", "phonetics", "semantics", "pragmatics", "etymology",
-                            "multilingual", "bilingual", "polyglot"],
-                "patterns": [r'\btranslate\s+(?:from|to)\s+\w+', r'\bgrammar\s+(?:rules|check)\b',
-                            r'\bsyntax\s+(?:error|structure)\b', r'\blinguistic\s+analysis\b',
-                            r'\betymology\s+of\b', r'\bphonetic\s+transcription\b'],
-                "model": "mistral-small",
-                "confidence": 0.89
-            },
-            {
-                "keywords": ["technical documentation", "api documentation", "user manual", "instruction manual",
-                            "system architecture", "software documentation", "code documentation",
-                            "technical writing", "specification", "requirements"],
-                "patterns": [r'\bdocument(?:ation)?\s+(?:how|the)\b', r'\bapi\s+(?:reference|docs)\b',
-                            r'\buser\s+(?:manual|guide)\b', r'\btechnical\s+specification\b',
-                            r'\bsystem\s+(?:architecture|design)\b', r'\brequirements\s+document\b'],
-                "model": "mistral-small",
-                "confidence": 0.87
-            },
-            {
-                "keywords": ["computer vision", "image analysis", "object detection", "pattern recognition",
-                            "machine learning", "deep learning", "neural network", "convolutional",
-                            "image processing", "feature extraction", "classification"],
-                "patterns": [r'\banalyze\s+(?:this|the)\s+image\b', r'\bobject\s+detection\b',
-                            r'\bcomputer\s+vision\b', r'\bimage\s+(?:processing|analysis|recognition)\b',
-                            r'\bfeature\s+extraction\b', r'\bpattern\s+recognition\b',
-                            r'\bconvolutional\s+neural\s+network\b'],
-                "model": "qwen-2.5",
-                "confidence": 0.93
-            },
-            {
-                "keywords": ["satellite imagery", "remote sensing", "geospatial", "gis", "cartography",
-                            "topography", "aerial photography", "landsat", "modis", "sentinel"],
-                "patterns": [r'\bsatellite\s+(?:image|imagery)\b', r'\bremote\s+sensing\b',
-                            r'\bgeospatial\s+analysis\b', r'\bgis\s+(?:data|analysis)\b',
-                            r'\b(?:landsat|modis|sentinel)\b', r'\baerial\s+photography\b'],
-                "model": "qwen-2.5",
-                "confidence": 0.90
-            },
-            {
-                "keywords": ["encyclopedia", "factual", "definition", "statistics", "demographics",
-                            "geographical", "historical", "scientific fact", "data lookup"],
-                "patterns": [r'\bwhat\s+is\s+the\s+(?:capital|population|area|height)\s+of\b',
-                            r'\bwho\s+(?:is|was)\s+(?:the\s+)?(?:president|king|queen|emperor)\b',
-                            r'\bwhen\s+(?:did|was)\s+.*\b(?:born|died|founded|established)\b',
-                            r'\bdefine\s+\w+\b', r'\bstatistics\s+(?:for|of|about)\b'],
-                "model": "gemini-flash",
                 "confidence": 0.85
             },
+            
+            # Creative Writing/Storytelling - Llama 3.3 is excellent for creative tasks
             {
-                "keywords": ["conversational", "chat", "advice", "opinion", "personal", "emotional support",
-                            "relationship", "life advice", "motivation", "inspiration"],
-                "patterns": [r'\b(?:hello|hi|hey)\b.*\bhow\s+are\s+you\b',
-                            r'\bcan\s+you\s+help\s+me\s+with\s+(?:my|a)\s+(?:problem|situation)\b',
-                            r'\bi\s+(?:need|want)\s+(?:advice|help|support)\b',
-                            r'\bwhat\s+do\s+you\s+think\s+about\b', r'\blet\'?s\s+(?:talk|chat)\b'],
+                "keywords": ["write", "create", "story", "poem", "creative", "imagine", "narrative",
+                           "fiction", "character", "plot", "dialogue", "scene", "chapter"],
+                "patterns": [r'write\s+a\s+story', r'create\s+a\s+poem', r'tell\s+a\s+story', r'once\s+upon'],
                 "model": "llama-3.3",
-                "confidence": 0.78
+                "confidence": 0.85
             },
+            
+            # Language Tasks/Translation/Rewriting - Mistral Small is good for language processing
             {
-                "keywords": ["quick question", "simple query", "basic help", "general assistance"],
-                "patterns": [r'\bquick\s+question\b', r'\bsimple\s+(?:question|query)\b',
-                            r'\bcan\s+you\s+(?:quickly|briefly)\b', r'\bjust\s+wondering\b'],
+                "keywords": ["translate", "rewrite", "paraphrase", "summarize", "grammar", "language",
+                           "correct", "edit", "improve", "rephrase", "simplify"],
+                "patterns": [r'translate\s+to', r'rewrite\s+this', r'summarize\s+this', r'correct\s+the'],
+                "model": "mistral-small",
+                "confidence": 0.8
+            },
+            
+            # Visual/Multimodal tasks - Qwen2.5 VL is designed for vision-language tasks
+            {
+                "keywords": ["image", "picture", "visual", "describe", "see", "photo", "diagram",
+                           "chart", "graph", "illustration", "drawing", "artwork"],
+                "patterns": [r'describe\s+(?:this|the)\s+image', r'what\s+(?:do\s+you\s+)?see', r'analyze\s+(?:this|the)\s+picture'],
+                "model": "qwen-2.5",
+                "confidence": 0.8
+            },
+            
+            # Quick Facts/Information - Gemini Flash is fast for factual queries
+            {
+                "keywords": ["what is", "who is", "when", "where", "capital", "definition", "fact",
+                           "meaning", "information", "tell me", "quick", "fast"],
+                "patterns": [r'what\s+is\s+the\s+', r'who\s+is\s+', r'when\s+did\s+', r'where\s+is'],
                 "model": "gemini-flash",
+                "confidence": 0.75
+            },
+            
+            # General Conversation/Chat - Llama 3.3 is good for conversational tasks
+            {
+                "keywords": ["hello", "hi", "chat", "talk", "conversation", "discuss", "opinion",
+                           "think", "feel", "advice", "help", "recommend"],
+                "patterns": [r'what\s+do\s+you\s+think', r'can\s+you\s+help', r'i\s+need\s+advice'],
+                "model": "llama-3.3",
+                "confidence": 0.7
+            },
+            
+            # Technical Documentation/Explanation - Mistral Small for technical explanations
+            {
+                "keywords": ["explain", "documentation", "technical", "how to", "tutorial", "guide",
+                           "manual", "instructions", "procedure", "process", "method"],
+                "patterns": [r'how\s+to\s+', r'explain\s+how', r'what\s+are\s+the\s+steps'],
+                "model": "mistral-small",
                 "confidence": 0.75
             }
         ]
@@ -159,25 +97,13 @@ class LLMSelector:
         """
         prompt_lower = prompt.lower()
         
-        # Enhanced code detection - now includes more coding-related terms
-        code_patterns = [
-            r'[{}();]|def\s|class\s|import\s|```',  # Original pattern
-            r'\bscript\b|\bcode\b|\bprogram\b|\bfunction\b|\bmethod\b',  # Programming terms
-            r'\bhello\s+world\b|\bprint\s*\(|\breturn\s+["\']',  # Common coding examples
-            r'\bpython\b|\bjavascript\b|\bjava\b|\bc\+\+\b|\bhtml\b|\bcss\b|\bsql\b',  # Languages
-            r'\bwrite\s+(?:a|an|some)?\s*(?:script|code|program|function)\b',  # Write code requests
-            r'\bcreate\s+(?:a|an|some)?\s*(?:script|code|program|function)\b'  # Create code requests
-        ]
-        
-        has_code = any(re.search(pattern, prompt_lower) for pattern in code_patterns)
-        
         analysis = {
             "length": len(prompt.split()),
             "has_numbers": bool(re.search(r'\d+', prompt)),
-            "has_code": has_code,
+            "has_code": bool(re.search(r'[{}();]|def\s|class\s|import\s|```', prompt)),
             "question_words": len(re.findall(r'\b(?:what|how|why|when|where|who)\b', prompt_lower)),
             "complexity_indicators": len(re.findall(r'\b(?:complex|difficult|analyze|compare|evaluate|step by step)\b', prompt_lower)),
-            "creative_indicators": len(re.findall(r'\b(?:creative|story|poem|imagine|novel|essay|article)\b', prompt_lower)),  # Removed generic "write" and "create"
+            "creative_indicators": len(re.findall(r'\b(?:creative|story|poem|imagine|write|create)\b', prompt_lower)),
             "visual_indicators": len(re.findall(r'\b(?:image|picture|visual|photo|see|describe)\b', prompt_lower)),
             "factual_indicators": len(re.findall(r'\b(?:what is|who is|when|where|capital|definition)\b', prompt_lower)),
             "conversational_indicators": len(re.findall(r'\b(?:hello|hi|chat|opinion|think|advice|help)\b', prompt_lower))
@@ -260,8 +186,8 @@ class LLMSelector:
                 # Short factual questions → Gemini Flash
                 scores["gemini-flash"] = 0.7
                 scores["mistral-small"] = 0.3
-            elif analysis["creative_indicators"] > 0 or ("write" in prompt_lower and not analysis["has_code"]):
-                # Creative tasks → Llama 3.3 (but not if it's code writing)
+            elif analysis["creative_indicators"] > 0 or "write" in prompt_lower:
+                # Creative tasks → Llama 3.3
                 scores["llama-3.3"] = 0.7
                 scores["mistral-small"] = 0.3
             elif analysis["has_code"] or analysis["has_numbers"] or analysis["complexity_indicators"] > 0:
@@ -304,7 +230,7 @@ class LLMSelector:
         # Model-specific reasoning
         if selected_model == "deepseek-r1":
             if analysis["has_code"]:
-                reasons.append("contains code/programming request")
+                reasons.append("contains code")
             if analysis["has_numbers"]:
                 reasons.append("involves calculations")
             if analysis["complexity_indicators"] > 0:
