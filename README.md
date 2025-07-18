@@ -286,8 +286,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Ivan
 - Vishnu
 
-## 🙏 Acknowledgments
+Acknowledgments
 
 - OpenRouter for providing model access
 - Hugging Face for transformer models
-- FastAPI team for the web framework
+- FastAPI 
