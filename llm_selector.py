@@ -1,9 +1,12 @@
 import re
-from typing import Dict, Any
+from typing import Dict, Any, Callable
+try:
 from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
 import os
 
-load_dotenv()
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 if not OPENROUTER_API_KEY:
     raise RuntimeError("OPENROUTER_API_KEY is not set. Check your .env file and environment variables.")
@@ -21,8 +24,20 @@ class LLMSelector:
             # Mathematical/Coding tasks - DeepSeek R1 is best for complex reasoning
             {
                 "keywords": ["calculate", "solve", "equation", "math", "mathematics", "code", "program", 
-                           "algorithm", "function", "debug", "error", "programming", "implement", "coding"],
-                "patterns": [r'\d+[\+\-\*/]\d+', r'def\s+\w+', r'class\s+\w+', r'import\s+\w+', r'```'],
+                           "algorithm", "function", "debug", "error", "programming", "implement", "coding",
+                           "print", "output", "display", "script", "compile", "run", "execute"],  # Added print-related keywords
+                "patterns": [
+                    r'\d+[\+\-\*/]\d+', 
+                    r'def\s+\w+', 
+                    r'class\s+\w+', 
+                    r'import\s+\w+', 
+                    r'```',
+                    r'print\s*\(',  # Added print pattern
+                    r'console\.log',  # Added console.log pattern
+                    r'echo\s+',  # Added echo pattern
+                    r'system\.out',  # Added System.out pattern
+                    r'printf\s*\('  # Added printf pattern
+                ],
                 "model": "deepseek-r1",
                 "confidence": 0.9
             },
@@ -97,10 +112,25 @@ class LLMSelector:
         """
         prompt_lower = prompt.lower()
         
+        # Enhanced code detection patterns
+        code_patterns = [
+            r'[{}();]',  # Basic code syntax
+            r'def\s',    # Function definitions
+            r'class\s',  # Class definitions
+            r'import\s', # Import statements
+            r'```',      # Code blocks
+            r'print\s*\(', # Print statements
+            r'console\.log', # JavaScript logging
+            r'echo\s+',  # Shell echo
+            r'system\.out', # Java output
+            r'printf\s*\(' # C-style printing
+        ]
+        
         analysis = {
             "length": len(prompt.split()),
             "has_numbers": bool(re.search(r'\d+', prompt)),
-            "has_code": bool(re.search(r'[{}();]|def\s|class\s|import\s|```', prompt)),
+            "has_code": any(bool(re.search(pattern, prompt)) for pattern in code_patterns),
+            "has_print": bool(re.search(r'print|output|display|show|log|echo', prompt_lower)),
             "question_words": len(re.findall(r'\b(?:what|how|why|when|where|who)\b', prompt_lower)),
             "complexity_indicators": len(re.findall(r'\b(?:complex|difficult|analyze|compare|evaluate|step by step)\b', prompt_lower)),
             "creative_indicators": len(re.findall(r'\b(?:creative|story|poem|imagine|write|create)\b', prompt_lower)),
@@ -141,8 +171,12 @@ class LLMSelector:
         analysis = self.analyze_prompt(prompt)
         
         # DeepSeek R1 bonuses - Best for complex reasoning and coding
-        if analysis["has_code"] or analysis["has_numbers"]:
+        if analysis["has_code"]:
+            scores["deepseek-r1"] += 0.4  # Increased from 0.3
+        if analysis["has_print"]:  # New condition for print statements
             scores["deepseek-r1"] += 0.3
+        if analysis["has_numbers"]:
+            scores["deepseek-r1"] += 0.2
         if analysis["complexity_indicators"] > 0:
             scores["deepseek-r1"] += 0.25
         if analysis["length"] > 25:  # Very long prompts might need deep reasoning
@@ -175,8 +209,8 @@ class LLMSelector:
             scores["llama-3.3"] += 0.2
         
         # Normalize scores to ensure they're between 0 and 1
-        max_score = max(scores.values()) if max(scores.values()) > 0 else 1
-        scores = {model: score / max_score for model, score in scores.items()}
+        max_score = max(scores.values()) if scores.values() else 1.0
+        scores = {model: (score / max_score) for model, score in scores.items()}
         
         # Enhanced fallback logic for 5 models
         if all(score < 0.1 for score in scores.values()):
@@ -190,7 +224,7 @@ class LLMSelector:
                 # Creative tasks → Llama 3.3
                 scores["llama-3.3"] = 0.7
                 scores["mistral-small"] = 0.3
-            elif analysis["has_code"] or analysis["has_numbers"] or analysis["complexity_indicators"] > 0:
+            elif analysis["has_code"] or analysis["has_print"] or analysis["has_numbers"]:  # Added has_print check
                 # Technical/complex tasks → DeepSeek R1
                 scores["deepseek-r1"] = 0.7
                 scores["mistral-small"] = 0.3

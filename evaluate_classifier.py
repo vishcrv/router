@@ -5,12 +5,11 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import torch
 
 # Load label encoder
-# Load label encoder in reverse
 with open("label_encoder.json", "r") as f:
-    raw_map = json.load(f)
+    encoder_data = json.load(f)
 
-# Convert string index to int
-index_to_label = {int(k): v for k, v in raw_map.items()}
+# Get the id2label mapping
+index_to_label = {int(k): v for k, v in encoder_data["id2label"].items()}
 label_to_index = {v: k for k, v in index_to_label.items()}
 
 # Load model and tokenizer
@@ -47,6 +46,12 @@ def evaluate(path):
         y_pred,
         target_names=[index_to_label[i] for i in sorted(index_to_label)]
     ))
+
+    # Print additional metrics
+    print("\nClass Distribution:")
+    unique, counts = np.unique(y_true, return_counts=True)
+    for idx, count in zip(unique, counts):
+        print(f"{index_to_label[idx]}: {count} samples")
 
 evaluate("dataset_val.json")
 evaluate("dataset_test.json")

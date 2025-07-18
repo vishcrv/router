@@ -4,12 +4,17 @@ LLM_CONFIGS = {
         "url": "https://openrouter.ai/api/v1/chat/completions",
         "headers": {
             "Authorization": "Bearer {OPENROUTER_API_KEY}",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "HTTP-Referer": "https://github.com/",
+            "X-Title": "LLM Router"
         },
         "body_template": lambda prompt: {
-            "model": "deepseek/deepseek-r1-0528:free",
+            "model": "deepseek/deepseek-chat-v3-0324:free",
             "messages": [{"role": "user", "content": prompt}],
-            "max_tokens": 512,
+            "max_tokens": 1024,
+            "temperature": 0.3,
+            "top_p": 0.95,
+            "stream": False
         }
     },
     "mistral-small": {
@@ -17,12 +22,17 @@ LLM_CONFIGS = {
         "url": "https://openrouter.ai/api/v1/chat/completions",
         "headers": {
             "Authorization": "Bearer {OPENROUTER_API_KEY}",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "HTTP-Referer": "https://github.com/",
+            "X-Title": "LLM Router"
         },
         "body_template": lambda prompt: {
-            "model": "mistralai/mistral-small-3.2-24b-instruct:free",
+            "model": "mistralai/mistral-small-3.1-24b-instruct:free",
             "messages": [{"role": "user", "content": prompt}],
-            "max_tokens": 512,
+            "max_tokens": 1024,
+            "temperature": 0.7,
+            "top_p": 0.95,
+            "stream": False
         }
     },
     "qwen-2.5": {
@@ -30,12 +40,17 @@ LLM_CONFIGS = {
         "url": "https://openrouter.ai/api/v1/chat/completions",
         "headers": {
             "Authorization": "Bearer {OPENROUTER_API_KEY}",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "HTTP-Referer": "https://github.com/",
+            "X-Title": "LLM Router"
         },
         "body_template": lambda prompt: {
-            "model": "qwen/qwen2.5-vl-72b-instruct:free",
+            "model": "qwen/qwen3-30b-a3b:free",
             "messages": [{"role": "user", "content": prompt}],
-            "max_tokens": 512,
+            "max_tokens": 1024,
+            "temperature": 0.7,
+            "top_p": 0.95,
+            "stream": False
         }
     },
     "gemini-flash": {
@@ -43,12 +58,17 @@ LLM_CONFIGS = {
         "url": "https://openrouter.ai/api/v1/chat/completions",
         "headers": {
             "Authorization": "Bearer {OPENROUTER_API_KEY}",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "HTTP-Referer": "https://github.com/",
+            "X-Title": "LLM Router"
         },
         "body_template": lambda prompt: {
-            "model": "google/gemini-2.5-flash-lite-preview-06-17",
+            "model": "google/gemini-2.0-flash-exp:free",
             "messages": [{"role": "user", "content": prompt}],
-            "max_tokens": 512,
+            "max_tokens": 1024,
+            "temperature": 0.7,
+            "top_p": 0.95,
+            "stream": False
         }
     },
     "llama-3.3": {
@@ -56,12 +76,17 @@ LLM_CONFIGS = {
         "url": "https://openrouter.ai/api/v1/chat/completions",
         "headers": {
             "Authorization": "Bearer {OPENROUTER_API_KEY}",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "HTTP-Referer": "https://github.com/",
+            "X-Title": "LLM Router"
         },
         "body_template": lambda prompt: {
-            "model": "nvidia/llama-3.3-nemotron-super-49b-v1:free",
+            "model": "meta-llama/llama-3.3-70b-instruct:free",
             "messages": [{"role": "user", "content": prompt}],
-            "max_tokens": 512,
+            "max_tokens": 1024,
+            "temperature": 0.7,
+            "top_p": 0.95,
+            "stream": False
         }
     }
 }
